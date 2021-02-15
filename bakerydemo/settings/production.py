@@ -89,6 +89,20 @@ WAGTAILSEARCH_BACKENDS = {
                             ]
                         },
                     },
+                    "filter": {
+                        "russian_stop": {
+                            "type": "stop",
+                            "stopwords": "_russian_"
+                        },
+                        "russian_keywords": {
+                            "type": "keyword_marker",
+                            "keywords": ["пример"]
+                        },
+                        "russian_stemmer": {
+                            "type": "stemmer",
+                            "language": "russian"
+                        }
+                    },
                 },
             }
         },
@@ -97,7 +111,6 @@ WAGTAILSEARCH_BACKENDS = {
 
 ELASTICSEARCH_INDICES = {
     'en-us': 'default',
-    'ja-jp': 'japanese',
     'ru-ru': 'russian'
 }
 

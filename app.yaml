@@ -37,15 +37,15 @@ handlers:
 
 env_variables:
   DJANGO_SETTINGS_MODULE: 'bakerydemo.settings.production'
-  GOOGLE_APPLICATION_CREDENTIALS: ''
-  GS_BUCKET_NAME: ''
-  GS_PROJECT_ID: ''
-  ELASTICSEARCH_ENDPOINT: ''
-  DATABASE_NAME: ''
-  DATABASE_USER: ''
-  DATABASE_PASSWORD: ''
-  DATABASE_HOST: ''
-  SECRET_KEY: ''
+  GOOGLE_APPLICATION_CREDENTIALS: 'ornate-hangar-125622-e16e04136ba8.json'
+  GS_BUCKET_NAME: 'ornate-hangar-125622-static'
+  GS_PROJECT_ID: 'ornate-hangar-125622'
+  ELASTICSEARCH_ENDPOINT: '10.128.0.2'
+  DATABASE_NAME: 'wagtail'
+  DATABASE_USER: 'root'
+  DATABASE_PASSWORD: 'abcd1234'
+  DATABASE_HOST: '/cloudsql/ornate-hangar-125622:us-central1:demo-db-postgres'
+  SECRET_KEY: 'dfg$doijovn@opj(lk234#!sdf^dgdfg)24sfGfgD$DFG%dgfg'
 
 vpc_access_connector:
-  name: ''
+  name: 'projects/ornate-hangar-125622/locations/us-central1/connectors/es-connector'

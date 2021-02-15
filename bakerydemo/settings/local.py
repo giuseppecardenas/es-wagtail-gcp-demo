@@ -4,10 +4,10 @@ from bakerydemo.settings.dev import *   # noqa
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': '127.0.0.1',
-        'NAME': 'wagtail',
-        'USER': 'root',
-        'PASSWORD': 'abcd1234',
+        'HOST': os.environ.get('DATABASE_HOST', 'db'),
+        'NAME': os.environ.get('DATABASE_NAME', 'app_db'),
+        'USER': os.environ.get('DATABASE_USER', 'app_user'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', 'changeme'),
         'PORT': '5432',
     }
 }
@@ -15,7 +15,7 @@ DATABASES = {
 WAGTAILSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'wagtail.search.backends.elasticsearch6',
-        'URLS': ['http://34.71.200.181:9200'],
+        'URLS': ['http://35.224.213.100:9200'],
         'INDEX': 'wagtail',
         'TIMEOUT': 5,
         'OPTIONS': {},
@@ -36,7 +36,7 @@ WAGTAILSEARCH_BACKENDS = {
     },
     'russian': {
         'BACKEND': 'wagtail.search.backends.elasticsearch6',
-        'URLS': ['http://34.71.200.181:9200'],
+        'URLS': ['http://35.224.213.100:9200'],
         'INDEX': 'russian',
         'TIMEOUT': 5,
         'OPTIONS': {},
@@ -74,6 +74,11 @@ WAGTAILSEARCH_BACKENDS = {
     }
 }
 
+ELASTICSEARCH_INDICES = {
+    'en-us': 'default',
+    'ru-ru': 'russian'
+}
+
 # from elasticsearch import RequestsHttpConnection
 # WAGTAILSEARCH_BACKENDS = {
 #     'default': {
@@ -90,8 +95,25 @@ WAGTAILSEARCH_BACKENDS = {
 #     }
 # }
 
-GS_BUCKET_NAME = 'ornate-hangar-125622-static'
-GS_PROJECT_ID = 'ornate-hangar-125622'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}
+
+
+GS_BUCKET_NAME = os.getenv('GS_BUCKET_NAME')
+GS_PROJECT_ID = os.getenv('GS_PROJECT_ID')
 GS_DEFAULT_ACL = 'publicRead'
 GS_AUTO_CREATE_BUCKET = True
 STATIC_URL = 'https://storage.googleapis.com/' + GS_PROJECT_ID + '-static/'
@@ -100,3 +122,4 @@ INSTALLED_APPS.append('storages')
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 SECRET_KEY = 'dilfubglsufdbgliugaurebgluarbg'
+
