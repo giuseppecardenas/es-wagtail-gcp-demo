@@ -17,6 +17,8 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
+from wagtailbakery.models import BuildableWagtailBakeryModel
+
 from bakerydemo.base.blocks import BaseStreamBlock
 
 
@@ -47,8 +49,18 @@ class BlogPageTag(TaggedItemBase):
     """
     content_object = ParentalKey('BlogPage', related_name='tagged_items', on_delete=models.CASCADE)
 
+class CustomBuildableWagtailBakeryModel(BuildableWagtailBakeryModel):
 
-class BlogPage(Page):
+    detail_views = ['bakerydemo.blog.views.CustomWagtailBakeryView']
+
+    def _build_related(self):
+        # TODO: Build related pages with get_static_site_paths
+        pass
+
+    class Meta:
+        abstract = True
+
+class BlogPage(Page, CustomBuildableWagtailBakeryModel):
     """
     A Blog Page
 
@@ -130,7 +142,7 @@ class BlogPage(Page):
     subpage_types = []
 
 
-class BlogIndexPage(RoutablePageMixin, Page):
+class BlogIndexPage(RoutablePageMixin, Page, CustomBuildableWagtailBakeryModel):
     """
     Index page for blogs.
     We need to alter the page model's context to return the child page objects,

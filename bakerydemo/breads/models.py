@@ -12,8 +12,10 @@ from wagtail.core.models import Page
 from wagtail.search import index
 from wagtail.snippets.models import register_snippet
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtailbakery.models import BuildableWagtailBakeryModel
 
 from bakerydemo.base.blocks import BaseStreamBlock
+from bakerydemo.blog.models import CustomBuildableWagtailBakeryModel
 
 
 @register_snippet
@@ -83,7 +85,7 @@ class BreadType(models.Model):
         verbose_name_plural = "Bread types"
 
 
-class BreadPage(Page):
+class BreadPage(Page, CustomBuildableWagtailBakeryModel):
     """
     Detail view for a specific bread
     """
@@ -147,7 +149,7 @@ class BreadPage(Page):
     parent_page_types = ['BreadsIndexPage']
 
 
-class BreadsIndexPage(Page):
+class BreadsIndexPage(Page, CustomBuildableWagtailBakeryModel):
     """
     Index page for breads.
 

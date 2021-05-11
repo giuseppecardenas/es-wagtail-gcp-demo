@@ -16,9 +16,14 @@ services:
       DJANGO_SETTINGS_MODULE: bakerydemo.settings.local
       DJANGO_SECRET_KEY: changeme
       DATABASE_URL: postgres://app_user:changeme@db/app_db
-      ELASTICSEARCH_ENDPOINT: 34.71.200.181
       GS_PROJECT_ID: ornate-hangar-125622
       GS_BUCKET_NAME: ornate-hangar-125622-static
+      DATABASE_NAME: app_db
+      DATABASE_USER: app_user
+      DATABASE_PASSWORD: changeme
+      DATABASE_HOST: db
+      SECRET_KEY: liundfglsubdiguhstioughsoiuthgiurtnlsjntgilu
+      DJANGO_LOG_LEVEL: INFO
     build:
       context: ../../..
       dockerfile: infrastructure/docker/local/Dockerfile

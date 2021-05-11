@@ -65,6 +65,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+
+    'bakery',
+    'wagtailbakery',
+    'static_generation'
 ]
 
 MIDDLEWARE = [
@@ -184,3 +188,5 @@ ELASTICSEARCH_INDICES = {
     'ja-jp': 'japanese',
     'ru-ru': 'russian'
 }
+
+GOOGLE_APPLICATION_CREDENTIALS = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', '')

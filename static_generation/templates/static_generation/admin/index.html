@@ -1,0 +1,30 @@
+{% extends "wagtailadmin/base.html" %}
+
+{% load i18n %}
+
+{% block titletag %}
+    {% trans "Generate Site as Flat Files" %}
+{% endblock %}
+
+{% block content %}
+
+    {% trans "Generate Site as Flat Files" as title_str %}
+    {% include "wagtailadmin/shared/header.html" with title=title_str icon="cog" %}
+
+    <div class="nice-padding">
+
+        <div class="help-block help-info">
+            {% blocktrans %}
+                <p>This is a tool to generate all of this site's pages as flat HTML files and store them in Google Cloud Storage.</p>
+            {% endblocktrans %}
+        </div>
+
+        <form action="{% url 'static_generation:generate' %}" method="POST">
+            {% csrf_token %}
+
+            <ul class="fields">
+                <li><input class="button" type="submit" value="{% trans 'Generate' %}" /></li>
+            </ul>
+        </form>
+    </div>
+{% endblock %}

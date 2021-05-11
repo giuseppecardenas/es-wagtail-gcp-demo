@@ -11,8 +11,10 @@ from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPane
 from wagtail.core.models import Orderable, Page
 from wagtail.search import index
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtailbakery.models import BuildableWagtailBakeryModel
 
 from bakerydemo.base.blocks import BaseStreamBlock
+from bakerydemo.blog.models import CustomBuildableWagtailBakeryModel
 from bakerydemo.locations.choices import DAY_CHOICES
 
 
@@ -83,7 +85,7 @@ class LocationOperatingHours(Orderable, OperatingHours):
     )
 
 
-class LocationsIndexPage(Page):
+class LocationsIndexPage(Page, CustomBuildableWagtailBakeryModel):
     """
     A Page model that creates an index page (a listview)
     """
@@ -124,7 +126,7 @@ class LocationsIndexPage(Page):
     ]
 
 
-class LocationPage(Page):
+class LocationPage(Page, CustomBuildableWagtailBakeryModel):
     """
     Detail for a specific bakery location.
     """

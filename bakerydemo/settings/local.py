@@ -12,66 +12,74 @@ DATABASES = {
     }
 }
 
+# WAGTAILSEARCH_BACKENDS = {
+#     'default': {
+#         'BACKEND': 'wagtail.search.backends.elasticsearch6',
+#         'URLS': ['http://35.224.213.100:9200'],
+#         'INDEX': 'wagtail',
+#         'TIMEOUT': 5,
+#         'OPTIONS': {},
+#         'INDEX_SETTINGS': {
+#             'settings': {
+#                 'analysis': {
+#                     'analyzer': {
+#                         'rebuilt_standard_default': {
+#                             'tokenizer': 'classic',
+#                             'filter': [
+#                                 'lowercase'
+#                             ]
+#                         },
+#                     },
+#                 },
+#             }
+#         },
+#     },
+#     'russian': {
+#         'BACKEND': 'wagtail.search.backends.elasticsearch6',
+#         'URLS': ['http://35.224.213.100:9200'],
+#         'INDEX': 'russian',
+#         'TIMEOUT': 5,
+#         'OPTIONS': {},
+#         'INDEX_SETTINGS': {
+#             'settings': {
+#                 'analysis': {
+#                     'analyzer': {
+#                         "rebuilt_russian": {
+#                             "tokenizer": "standard",
+#                             "filter": [
+#                                 "lowercase",
+#                                 "russian_stop",
+#                                 "russian_keywords",
+#                                 "russian_stemmer"
+#                             ]
+#                         },
+#                     },
+#                     "filter": {
+#                         "russian_stop": {
+#                             "type": "stop",
+#                             "stopwords": "_russian_"
+#                         },
+#                         "russian_keywords": {
+#                             "type": "keyword_marker",
+#                             "keywords": ["пример"]
+#                         },
+#                         "russian_stemmer": {
+#                             "type": "stemmer",
+#                             "language": "russian"
+#                         }
+#                     },
+#                 },
+#             },
+#         },
+#     }
+# }
+
+# Use Elasticsearch as the search backend for extra performance and better search results
 WAGTAILSEARCH_BACKENDS = {
     'default': {
-        'BACKEND': 'wagtail.search.backends.elasticsearch6',
-        'URLS': ['http://35.224.213.100:9200'],
-        'INDEX': 'wagtail',
-        'TIMEOUT': 5,
-        'OPTIONS': {},
-        'INDEX_SETTINGS': {
-            'settings': {
-                'analysis': {
-                    'analyzer': {
-                        'rebuilt_standard_default': {
-                            'tokenizer': 'classic',
-                            'filter': [
-                                'lowercase'
-                            ]
-                        },
-                    },
-                },
-            }
-        },
+        'BACKEND': 'wagtail.search.backends.db',
+        'INDEX': 'bakerydemo',
     },
-    'russian': {
-        'BACKEND': 'wagtail.search.backends.elasticsearch6',
-        'URLS': ['http://35.224.213.100:9200'],
-        'INDEX': 'russian',
-        'TIMEOUT': 5,
-        'OPTIONS': {},
-        'INDEX_SETTINGS': {
-            'settings': {
-                'analysis': {
-                    'analyzer': {
-                        "rebuilt_russian": {
-                            "tokenizer": "standard",
-                            "filter": [
-                                "lowercase",
-                                "russian_stop",
-                                "russian_keywords",
-                                "russian_stemmer"
-                            ]
-                        },
-                    },
-                    "filter": {
-                        "russian_stop": {
-                            "type": "stop",
-                            "stopwords": "_russian_"
-                        },
-                        "russian_keywords": {
-                            "type": "keyword_marker",
-                            "keywords": ["пример"]
-                        },
-                        "russian_stemmer": {
-                            "type": "stemmer",
-                            "language": "russian"
-                        }
-                    },
-                },
-            },
-        },
-    }
 }
 
 ELASTICSEARCH_INDICES = {
@@ -114,12 +122,19 @@ LOGGING = {
 
 GS_BUCKET_NAME = os.getenv('GS_BUCKET_NAME')
 GS_PROJECT_ID = os.getenv('GS_PROJECT_ID')
-GS_DEFAULT_ACL = 'publicRead'
 GS_AUTO_CREATE_BUCKET = True
-STATIC_URL = 'https://storage.googleapis.com/' + GS_PROJECT_ID + '-static/'
-MEDIA_URL = 'https://storage.googleapis.com/' + GS_PROJECT_ID + '-media/'
+GS_QUERYSTRING_AUTH = False
+# STATIC_URL = 'https://storage.googleapis.com/' + GS_PROJECT_ID + '-static/'
+# MEDIA_URL = 'https://storage.googleapis.com/' + GS_PROJECT_ID + '-media/'
 INSTALLED_APPS.append('storages')
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 SECRET_KEY = 'dilfubglsufdbgliugaurebgluarbg'
 
+BUILD_DIR_NAME = 'static_html'
+BUILD_DIR = ''
+# BUILD_DIR = 'static_html'
+
+BAKERY_VIEWS = (
+	'bakerydemo.blog.views.CustomAllPublishedPagesView',
+)
